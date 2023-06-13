@@ -4,6 +4,7 @@ namespace RealizationOfApp
 {
     public class GGO:AbstractEventDrawable
     {
+        public float ForceOfGravity = 0.2f;
         public IList<IGameObject> gameObjects;
         public List<IMovableObject> movableObjects;
         public List<AbstractEventDrawable> abstractEventDrawables;
@@ -29,7 +30,7 @@ namespace RealizationOfApp
             foreach(IMovableObject movableObject in movableObjects)
             {
                 if (movableObject.IsGravityOn)
-                    movableObject.DeltaY += 0.1f;
+                    movableObject.DeltaY += ForceOfGravity;
                 if(Math.Abs(movableObject.Position.Y+movableObject.Size.Y/2-movableObject.BottomCoord)<=1)
                     movableObject.DeltaX = movableObject.DeltaX==0 ? 0 : movableObject.DeltaX > 0 ? movableObject.DeltaX-movableObject.ForceOfTrenie : movableObject.DeltaX + movableObject.ForceOfTrenie;
                 Application.degubText.DisplayedString = movableObject.DeltaX.ToString();

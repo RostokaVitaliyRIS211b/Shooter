@@ -11,6 +11,9 @@ namespace RealizationOfApp
         }
         public Clock Clocks { get => movable.Clocks; }
         public float ForceOfTrenie { get => movable.ForceOfTrenie; set => movable.ForceOfTrenie=value; }
+        public float HeightCoord { get => movable.HeightCoord; set => movable.HeightCoord=value; }
+        public float LeftCoord { get => movable.LeftCoord; set => movable.LeftCoord=value; }
+        public float RightCoord { get => movable.RightCoord; set => movable.RightCoord=value; }
         public float BottomCoord { get => movable.BottomCoord; set => movable.BottomCoord=value; }
         public float DeltaX { get => movable.DeltaX; set => movable.DeltaX=value; }
         public float DeltaY { get => movable.DeltaY; set => movable.DeltaY=value; }

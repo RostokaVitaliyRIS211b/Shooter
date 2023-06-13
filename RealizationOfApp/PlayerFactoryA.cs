@@ -17,7 +17,7 @@ namespace RealizationOfApp
             shape.FillColor = Color.Blue;
             shape.OutlineColor = Color.Black;
             shape.OutlineThickness = 1;
-            movableRect = new MovableRectOfPlayer(shape, 720,0.1f);
+            movableRect = new MovableRectOfPlayer(shape, 720,0.1f,0,1280,0);
         }
         public override IMovableObject GetMovableObject() => movableRect;
         public override Dictionary<EventType, WinEventHandler<EventArgs>> GetActions()
@@ -27,7 +27,7 @@ namespace RealizationOfApp
                 double a = Math.Abs(movableRect.Position.Y + movableRect.Size.Y/2 - movableRect.BottomCoord);
                 if (y.Code == Keyboard.Key.W && a<=1)
                 {
-                    movableRect.DeltaY = -5;
+                    movableRect.DeltaY = -10;
                 }
             };
             WinEventHandler<KeyEventArgs> keyRelesed = (x, y) =>

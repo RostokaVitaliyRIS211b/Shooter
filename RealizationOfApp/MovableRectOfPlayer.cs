@@ -5,10 +5,10 @@ namespace RealizationOfApp
     public class MovableRectOfPlayer : IMovableObject
     {
         protected Clock clock = new();
-        protected float deltaX, deltaY, massOfObject,bottom,trenie;
+        protected float deltaX, deltaY, massOfObject,bottom,trenie,left,right,up;
         protected bool isGravityOn;
         protected RectangleShape rectangle;
-        public MovableRectOfPlayer(in RectangleShape rectangle,float bottom,float trenie)
+        public MovableRectOfPlayer(in RectangleShape rectangle,float bottom,float trenie, float left, float right, float up)
         {
             this.rectangle = new(rectangle);
             isGravityOn = true;
@@ -17,6 +17,9 @@ namespace RealizationOfApp
             massOfObject = 1;
             this.bottom = bottom;
             this.trenie = trenie;
+            this.left = left;
+            this.right = right;
+            this.up = up;
         }
         public float ForceOfTrenie
         {
@@ -29,6 +32,9 @@ namespace RealizationOfApp
                     throw new ArgumentException("Force trenia cant be less than zero");
             }
         }
+        public float HeightCoord { get => up; set => up=value; }
+        public float LeftCoord { get => left; set => left=value; }
+        public float RightCoord { get => right; set => right=value; }
         public float BottomCoord { get => bottom; set => bottom=value; }
         public Clock Clocks { get => clock; }
         public float DeltaX 
@@ -89,13 +95,33 @@ namespace RealizationOfApp
         {
             if (Keyboard.IsKeyPressed(Keyboard.Key.A))
             {
-                DeltaX = -3;
+                DeltaX = -4;
             }
             if (Keyboard.IsKeyPressed(Keyboard.Key.D))
             {
-                DeltaX = 3;
+                DeltaX = 4;
             }
             Move(DeltaX, DeltaY);
+            if (bottom - (rectangle.Position.Y + rectangle.Size.Y/2) < 0 && deltaY > 0)
+            {
+                rectangle.Position = new(rectangle.Position.X, bottom - rectangle.Size.Y/2 + 1);
+                deltaY = 0;
+            }
+            if(up - (rectangle.Position.Y - rectangle.Size.Y/2)>0 && deltaY < 0)
+            {
+                rectangle.Position = new(rectangle.Position.X, up + rectangle.Size.Y/2 + 1);
+                deltaY = 0;
+            }
+            if(right - (rectangle.Position.X+rectangle.Size.X/2)<0 && deltaX>0)
+            {
+                rectangle.Position = new(right-rectangle.Size.X/2, rectangle.Position.Y);
+                deltaX = 0;
+            }
+            if (left - (rectangle.Position.X-rectangle.Size.X/2)>0 && deltaX<0)
+            {
+                rectangle.Position = new(left+rectangle.Size.X/2, rectangle.Position.Y);
+                deltaX = 0;
+            }
             target.Draw(rectangle);
         }
 
