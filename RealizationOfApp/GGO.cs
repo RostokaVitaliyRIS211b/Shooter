@@ -38,6 +38,7 @@ namespace RealizationOfApp
             }
             foreach (AbstractEventDrawable drawable in abstractEventDrawables)
                 drawable.InvokeAction(this, eventType, eventArgs);
+            DeleteObjects();
         }
         public override void Draw(RenderTarget target, RenderStates states)
         {
@@ -66,10 +67,12 @@ namespace RealizationOfApp
                     movableObject.DeltaX = movableObject.DeltaX==0 ? 0 : movableObject.DeltaX > 0 ? movableObject.DeltaX-movableObject.ForceOfTrenie : movableObject.DeltaX + movableObject.ForceOfTrenie;
                 //Application.degubText.DisplayedString = movableObject.DeltaX.ToString();
             }
-            foreach(IGameObject gameObject in gameObjects)
+            DeleteObjects();
+            foreach (IGameObject gameObject in gameObjects)
             {
                 target.Draw(gameObject, states);
-            }        }
+            }       
+        }
         public void DeleteObjects()
         {
             List<IGameObject> isNeedRemove = new(from elem in gameObjects

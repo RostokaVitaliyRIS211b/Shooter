@@ -6,11 +6,11 @@ namespace RealizationOfApp
         protected float glB, glL, glR, glU;
         protected Clock clock = new();
         protected float deltaX, deltaY, massOfObject, bottom, trenie, left, right, up;
-        protected bool isGravityOn;
+        protected bool isGravityOn,IsNeedToRemo;
         protected CircleShape shell;
         public Projectile(in CircleShape circle, float bottom, float trenie, float left, float right, float up)
         {
-            IsNeedToRemove = false;
+            IsNeedToRemo = false;
             this.shell = new(circle);
             isGravityOn = false;
             deltaX = 0;
@@ -26,7 +26,7 @@ namespace RealizationOfApp
             glR = this.right;
             glU = this.up;
         }
-        public virtual bool IsNeedToRemove { get; set; }
+        public virtual bool IsNeedToRemove { get=> IsNeedToRemo; set=> IsNeedToRemo=value; }
         public float ForceOfTrenie
         {
             get => trenie;
@@ -84,7 +84,7 @@ namespace RealizationOfApp
                 if (gameObject is Player player)
                 {
                     player.IsNeedToRemove = true;
-                    this.IsNeedToRemove=true;
+                    this.IsNeedToRemove = true;
                 }
                 else if (gameObject is Platform platform)
                 {
@@ -98,7 +98,7 @@ namespace RealizationOfApp
             Math.Abs(myPos.X-platform.Position.X-platform.Size.X/2)>10;
         public void Draw(RenderTarget target, RenderStates states)
         {
-            if (Position.X>glL || Position.X< glR || Position.Y>glB || Position.Y<glU)
+            if (Position.X<glL || Position.X > glR || Position.Y>glB || Position.Y<glU)
                 IsNeedToRemove = true;
             Move(DeltaX, DeltaY);
             target.Draw(shell);
