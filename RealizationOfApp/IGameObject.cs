@@ -4,6 +4,7 @@ namespace RealizationOfApp
 {
     public interface IGameObject:Drawable
     {
+        public bool IsNeedToRemove { get; set; }
         public Vector2f Position { get; set; }
         public Vector2f Size { get; set; }
         public Vector2f Origin { get; set; }

@@ -1,53 +1,46 @@
 ﻿namespace RealizationOfApp
 {
-    public class PlayerFactoryA : AbstractPlayerFactory
+    public class PlayerFactoryB : AbstractPlayerFactory
     {
         public MovableRectOfPlayer movableRect;
         public Keyboard.Key key;
-        public bool isPressed = false;
-        public IWeapon weapon;
-        public PlayerFactoryA(IWeapon weapon)
+        public PlayerFactoryB()
         {
-            this.weapon = weapon;
             RectangleShape shape = new();
             shape.Size = new(50, 50);
             shape.Origin = new Vector2f(shape.Size.X/2, shape.Size.Y/2);
-            shape.Position = new(665, 600);
-            shape.FillColor = Color.Blue;
+            shape.Position = new(100, 600);
+            shape.FillColor = Color.Red;
             shape.OutlineColor = Color.Black;
             shape.OutlineThickness = 1;
-            movableRect = new MovableRectOfPlayer(shape, 720, 0.1f, 0, 1280, 0, Keyboard.Key.A, Keyboard.Key.D);
+            movableRect = new MovableRectOfPlayer(shape, 720, 0.1f, 0, 1280, 0,Keyboard.Key.Left,Keyboard.Key.Right);
         }
         public override IMovableObject GetMovableObject() => movableRect;
         public override Dictionary<EventType, WinEventHandler<EventArgs>> GetActions()
         {
-            WinEventHandler<KeyEventArgs> keyPressed = (sender, args) =>
+            WinEventHandler<KeyEventArgs> keyPressed = (x, y) =>
             {
                 double a = Math.Abs(movableRect.Position.Y + movableRect.Size.Y/2 - movableRect.BottomCoord);
-                if (args.Code == Keyboard.Key.W && a<=1)
+                if (y.Code == Keyboard.Key.Up && a<=1)
                 {
                     movableRect.DeltaY = -10;
                 }
             };
-            WinEventHandler<MouseButtonEventArgs> mouseButtonPressed = (sender, args) =>
+            WinEventHandler<KeyEventArgs> keyRelesed = (x, y) =>
             {
-                //if (!isPressed)
-                    weapon.Attack(sender,movableRect,args);
-                isPressed = true;
-            };
-            WinEventHandler<MouseButtonEventArgs> mouseButtonReleased = (sender, args) =>
-            {
-                isPressed = false;
+
             };
             return new Dictionary<EventType, WinEventHandler<EventArgs>>()
             {
                 {
                     EventType.MouseButtonPressed,
-                    DelegateCaster.CastToEvHan(mouseButtonPressed)
+                    (x,y)=>
+                    { }
                 },
                 {
                     EventType.MouseButtonReleased,
-                    DelegateCaster.CastToEvHan(mouseButtonReleased)
+                    (x,y)=>
+                    { }
                 },
                 {
                     EventType.MouseMoved,
@@ -60,8 +53,7 @@
                 },
                 {
                     EventType.KeyReleased,
-                    (x,y)=>
-                    { }
+                    DelegateCaster.CastToEvHan(keyRelesed)
                 },
                 {
                     EventType.MouseWheelScrolled,

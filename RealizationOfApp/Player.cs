@@ -10,6 +10,7 @@ namespace RealizationOfApp
             movable = factory.GetMovableObject();
         }
         public Clock Clocks { get => movable.Clocks; }
+        public override bool IsNeedToRemove { get => movable.IsNeedToRemove; set => movable.IsNeedToRemove =value; }
         public float ForceOfTrenie { get => movable.ForceOfTrenie; set => movable.ForceOfTrenie=value; }
         public float HeightCoord { get => movable.HeightCoord; set => movable.HeightCoord=value; }
         public float LeftCoord { get => movable.LeftCoord; set => movable.LeftCoord=value; }

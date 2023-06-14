@@ -18,6 +18,7 @@ namespace RealizationOfApp
         {
             this.shape = new(shape);
         }
+        public bool IsNeedToRemove { get; set; }
         public Vector2f Position { get => shape.Position; set => shape.Position=value; }
         public Vector2f Origin { get => shape.Origin; set => shape.Origin=value; }
         public Vector2f Scale { get => shape.Scale; set => shape.Scale=value; }

@@ -1,15 +1,19 @@
 ﻿
 
+using static SFML.Window.Keyboard;
+
 namespace RealizationOfApp
 {
     public class MovableRectOfPlayer : IMovableObject
     {
+
         protected float glB, glL, glR, glU;
         protected Clock clock = new();
         protected float deltaX, deltaY, massOfObject, bottom, trenie, left, right, up;
         protected bool isGravityOn;
         protected RectangleShape rectangle;
-        public MovableRectOfPlayer(in RectangleShape rectangle, float bottom, float trenie, float left, float right, float up)
+        public Keyboard.Key forLeft, forRight;
+        public MovableRectOfPlayer(in RectangleShape rectangle, float bottom, float trenie, float left, float right, float up,Keyboard.Key forLeft,Keyboard.Key forRight)
         {
             this.rectangle = new(rectangle);
             isGravityOn = true;
@@ -25,8 +29,10 @@ namespace RealizationOfApp
             glL = this.left;
             glR = this.right;
             glU = this.up;
-
+            this.forLeft=forLeft;
+            this.forRight=forRight;
         }
+        public virtual bool IsNeedToRemove { get; set; }
         public float ForceOfTrenie
         {
             get => trenie;
@@ -134,11 +140,11 @@ namespace RealizationOfApp
         }
         public void Draw(RenderTarget target, RenderStates states)
         {
-            if (Keyboard.IsKeyPressed(Keyboard.Key.A))
+            if (Keyboard.IsKeyPressed(forLeft))
             {
                 DeltaX = -4;
             }
-            if (Keyboard.IsKeyPressed(Keyboard.Key.D))
+            if (Keyboard.IsKeyPressed(forRight))
             {
                 DeltaX = 4;
             }

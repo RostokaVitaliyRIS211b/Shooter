@@ -10,7 +10,8 @@ namespace RealizationOfApp
         {
             return new List<IGameObject>()
             {
-                new Player(new PlayerFactoryA()),
+                new Player(new PlayerFactoryB()),
+                new Player(new PlayerFactoryA(new WeaponProjectile())),
                 new Platform(new(1000,600))
             };
         }

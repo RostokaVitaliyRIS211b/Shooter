@@ -6,7 +6,7 @@ namespace SfmlAppLib
     {
         protected Dictionary<EventType, WinEventHandler<EventArgs>> actions;
         public bool IsAlive { get; set; } = true;
-        public bool IsNeedToRemove { get; set; } = false;
+        public virtual bool IsNeedToRemove { get; set; } = false;
         
         public AbstractEventDrawable(AbstractDrawableFactory factory)
         {
