@@ -13,5 +13,6 @@ namespace RealizationOfApp
         public Clock Clocks { get; }
         public float MassOfObject { get; set; }
         public bool IsGravityOn { get; set; }
+        public void Collision(object? sender, IEnumerable<IGameObject> gameObjectCollision);
     }
 }

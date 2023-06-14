@@ -1,7 +1,4 @@
-﻿
-
-
-namespace RealizationOfApp
+﻿namespace RealizationOfApp
 {
     public class PlayerFactoryA:AbstractPlayerFactory
     {
@@ -11,7 +8,7 @@ namespace RealizationOfApp
         {
             RectangleShape shape = new();
             shape.Size = new(50, 50);
-            shape.Origin = new Vector2f(25, 25);
+            shape.Origin = new Vector2f(shape.Size.X/2, shape.Size.Y/2);
             shape.Position = new(665, 600);
             float b = shape.GetGlobalBounds().Top;
             shape.FillColor = Color.Blue;

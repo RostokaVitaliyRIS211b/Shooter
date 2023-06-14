@@ -4,11 +4,12 @@ namespace RealizationOfApp
 {
     public class MovableRectOfPlayer : IMovableObject
     {
+        protected float glB, glL, glR, glU;
         protected Clock clock = new();
-        protected float deltaX, deltaY, massOfObject,bottom,trenie,left,right,up;
+        protected float deltaX, deltaY, massOfObject, bottom, trenie, left, right, up;
         protected bool isGravityOn;
         protected RectangleShape rectangle;
-        public MovableRectOfPlayer(in RectangleShape rectangle,float bottom,float trenie, float left, float right, float up)
+        public MovableRectOfPlayer(in RectangleShape rectangle, float bottom, float trenie, float left, float right, float up)
         {
             this.rectangle = new(rectangle);
             isGravityOn = true;
@@ -20,6 +21,11 @@ namespace RealizationOfApp
             this.left = left;
             this.right = right;
             this.up = up;
+            glB = this.bottom;
+            glL = this.left;
+            glR = this.right;
+            glU = this.up;
+
         }
         public float ForceOfTrenie
         {
@@ -37,9 +43,9 @@ namespace RealizationOfApp
         public float RightCoord { get => right; set => right=value; }
         public float BottomCoord { get => bottom; set => bottom=value; }
         public Clock Clocks { get => clock; }
-        public float DeltaX 
+        public float DeltaX
         {
-            get => deltaX; 
+            get => deltaX;
             set
             {
                 if (Math.Abs(deltaX)>=ForceOfTrenie || Math.Abs(deltaX-value)>ForceOfTrenie)
@@ -48,8 +54,8 @@ namespace RealizationOfApp
                     deltaX = 0;
             }
         }
-        public float DeltaY 
-        { 
+        public float DeltaY
+        {
             get => deltaY;
             set
             {
@@ -83,7 +89,7 @@ namespace RealizationOfApp
         {
             bool flag = false;
             FloatRect curr = rectangle.GetGlobalBounds();
-            foreach(FloatRect floatRect in floatRects)
+            foreach (FloatRect floatRect in floatRects)
             {
                 flag = curr.Intersects(floatRect);
                 if (flag)
@@ -91,7 +97,42 @@ namespace RealizationOfApp
             }
             return flag;
         }
-        public void Draw(RenderTarget target,RenderStates states)
+        public void Collision(object? sender, IEnumerable<IGameObject> gameObjecstCollisions)
+        {
+            if (gameObjecstCollisions.Count()==0)
+            {
+                up = glU;
+                right = glR;
+                left = glL;
+                bottom = glB;
+            }
+            else
+            {
+                foreach(IGameObject gameObject in gameObjecstCollisions)
+                {
+                    if (gameObject is Platform platform)
+                    {
+                        if(platform.Position.Y-platform.Size.Y/2<=rectangle.Position.Y+rectangle.Size.Y/2+1)
+                        {
+                            bottom = platform.Position.Y-platform.Size.Y/2;
+                        }
+                        //else if(platform.Position.Y+platform.Size.Y/2>=rectangle.Position.Y-rectangle.Size.Y/2-1)
+                        //{
+                        //    up = platform.Position.Y+platform.Size.Y/2;
+                        //}
+                        else if(platform.Position.X+platform.Size.X/2<=rectangle.Position.X-rectangle.Size.Y/2+1)
+                        {
+                            left = platform.Position.X+platform.Size.X/2;
+                        }
+                        else if (platform.Position.X-platform.Size.X/2>=rectangle.Position.X+rectangle.Size.Y/2-1)
+                        {
+                            right = platform.Position.X+platform.Size.X/2;
+                        }
+                    }
+                }
+            }
+        }
+        public void Draw(RenderTarget target, RenderStates states)
         {
             if (Keyboard.IsKeyPressed(Keyboard.Key.A))
             {
@@ -107,12 +148,12 @@ namespace RealizationOfApp
                 rectangle.Position = new(rectangle.Position.X, bottom - rectangle.Size.Y/2 + 1);
                 deltaY = 0;
             }
-            if(up - (rectangle.Position.Y - rectangle.Size.Y/2)>0 && deltaY < 0)
-            {
-                rectangle.Position = new(rectangle.Position.X, up + rectangle.Size.Y/2 + 1);
-                deltaY = 0;
-            }
-            if(right - (rectangle.Position.X+rectangle.Size.X/2)<0 && deltaX>0)
+            //if ((rectangle.Position.Y - rectangle.Size.Y/2)-up <= 0 && deltaY < 0)
+            //{
+            //    rectangle.Position = new(rectangle.Position.X, up + rectangle.Size.Y/2 + 1);
+            //    deltaY = 0;
+            //}
+            if (right - (rectangle.Position.X+rectangle.Size.X/2)<0 && deltaX>0)
             {
                 rectangle.Position = new(right-rectangle.Size.X/2, rectangle.Position.Y);
                 deltaX = 0;

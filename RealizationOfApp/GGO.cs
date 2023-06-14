@@ -27,6 +27,11 @@ namespace RealizationOfApp
         }
         public override void Draw(RenderTarget target, RenderStates states)
         {
+            foreach(IMovableObject movable in movableObjects)
+            {
+                IEnumerable<IGameObject> coll = gameObjects.Where(x => x!=movable && x.Contains(movable.GetBounds().ToArray()));
+                movable.Collision(this, coll);
+            }
             foreach(IMovableObject movableObject in movableObjects)
             {
                 if (movableObject.IsGravityOn)
@@ -40,6 +45,7 @@ namespace RealizationOfApp
                 target.Draw(gameObject, states);
             }
         }
+        #region Nah
         public override void AddAction(EventType eventType, WinEventHandler<EventArgs> action)
         {
 
@@ -48,5 +54,6 @@ namespace RealizationOfApp
         {
 
         }
+        #endregion
     }
 }

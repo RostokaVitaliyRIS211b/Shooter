@@ -28,6 +28,10 @@ namespace RealizationOfApp
         public void Move(float x, float y) => movable.Move(x,y);
         public bool Contains(float x, float y) => movable.Contains(x, y);
         public bool Contains(params FloatRect[] floatRects) => movable.Contains(floatRects);
+        public void Collision(object? sender, IEnumerable<IGameObject> gameObjectCollision)
+        {
+            movable.Collision(sender, gameObjectCollision);
+        }
         public override void Draw(RenderTarget target, RenderStates states)
         {
             movable.Draw(target, states);
