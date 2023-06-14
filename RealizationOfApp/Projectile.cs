@@ -79,28 +79,23 @@ namespace RealizationOfApp
         }
         public void Collision(object? sender, IEnumerable<IGameObject> gameObjecstCollisions)
         {
-            float lefts = shell.Position.X-shell.Radius;
-            float rights = shell.Position.X+shell.Radius;
-            float top = shell.Position.Y-shell.Radius;
-            float bottoms = shell.Position.Y+shell.Radius;
             foreach (IGameObject gameObject in gameObjecstCollisions)
             {
-                if(gameObject is Player player)
+                if (gameObject is Player player)
                 {
                     player.IsNeedToRemove = true;
                     this.IsNeedToRemove=true;
                 }
-                else if(gameObject is Platform platform)
+                else if (gameObject is Platform platform)
                 {
-                    float leftsp = platform.Position.X-platform.Size.X/2;
-                    float rightsp = platform.Position.X+platform.Size.X/2;
-                    float topp = platform.Position.Y-platform.Size.Y/2;
-                    float bottomsp = platform.Position.Y+platform.Size.Y/2;
-                    DeltaX = (rightsp<=lefts)||(leftsp>=rights) ? -DeltaX : DeltaX;
-                    DeltaY = (topp<=bottoms)||(bottomsp>=top) ? -DeltaY : DeltaY;
+                    bool isOnT = IsIOnTop(Position, platform);
+                    DeltaX = isOnT ? DeltaX : -DeltaX;
+                    DeltaY = isOnT ? -DeltaY : DeltaY;
                 }
             }
         }
+        public bool IsIOnTop(Vector2f myPos, IGameObject platform) => Math.Abs(myPos.X-platform.Position.X+platform.Size.X/2)>10 &&
+            Math.Abs(myPos.X-platform.Position.X-platform.Size.X/2)>10;
         public void Draw(RenderTarget target, RenderStates states)
         {
             if (Position.X>glL || Position.X< glR || Position.Y>glB || Position.Y<glU)
