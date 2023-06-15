@@ -11,10 +11,6 @@ namespace RealizationOfApp.Weapons
         {
             playerPos = objOfPlayer.Position;
             aimPos = aim.Position;
-            float angle = (float)Angle(playerPos, aimPos);
-            float additionalPixl = (float)Math.Sqrt(objOfPlayer.Size.X * objOfPlayer.Size.X / 4 + objOfPlayer.Size.Y * objOfPlayer.Size.Y / 4);
-            float finalAdd = (float)(10 + additionalPixl * (Math.Cos(0.79) / SYKA(angle)));
-            float yAngle = aimPos.Y < playerPos.Y ? 1 - angle * angle : -(1 - angle * angle);
             if (sender is GGO ggo)
             {
                 CircleShape circleShape = new();
@@ -24,7 +20,7 @@ namespace RealizationOfApp.Weapons
                 circleShape.OutlineColor = Color.Black;
                 circleShape.OutlineThickness = 2;
 
-                circleShape.Position = new Vector2f(objOfPlayer.Position.X + (objOfPlayer.Size.X / 2 + finalAdd) * angle, objOfPlayer.Position.Y - (objOfPlayer.Size.Y / 2 + finalAdd) * yAngle);
+                circleShape.Position = aim.Position;
                 Projectile projectile = new(circleShape, 720, 0, 0, 1280, 0);
                 double time = Dlina(playerPos, aimPos) / SpeedInPixelSeconds;
                 projectile.DeltaX = (float)((aimPos.X - playerPos.X) / time);
