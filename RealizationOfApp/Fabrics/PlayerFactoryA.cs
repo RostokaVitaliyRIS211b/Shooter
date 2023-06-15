@@ -6,7 +6,7 @@ namespace RealizationOfApp.Fabrics
     {
         public MovableRectOfPlayer movableRect;
         public Keyboard.Key key;
-        public bool isGrow = false;
+        public bool isPressed = false;
         public IWeapon weapon;
         public Aim aim;
         protected float radius = 0;
@@ -20,7 +20,7 @@ namespace RealizationOfApp.Fabrics
             shape.FillColor = Color.Blue;
             shape.OutlineColor = Color.Black;
             shape.OutlineThickness = 1;
-            movableRect = new MovableRectOfPlayer(shape, 720, 0.1f, 0, 1280, 0, Keyboard.Key.A, Keyboard.Key.D);
+            movableRect = new MovableRectOfPlayer(shape, 720, 0.8f, 0, 1280, 0, Keyboard.Key.A, Keyboard.Key.D);
             CircleShape circleShape = new();
             circleShape.Radius = 5;
             circleShape.Origin = new(5, 5);
@@ -43,9 +43,15 @@ namespace RealizationOfApp.Fabrics
                     movableRect.DeltaY = -10;
                 }
                
-                else if (args.Code == Keyboard.Key.F)
+                else if (args.Code == Keyboard.Key.LShift && !isPressed)
+                {
                     weapon.Attack(sender, movableRect, aim, args);
-   
+                    isPressed = true;
+                }
+            };
+            WinEventHandler<KeyEventArgs> keyReleased = (sender, args) =>
+            {
+                isPressed = !(args.Code == Keyboard.Key.LShift);
             };
             return new Dictionary<EventType, WinEventHandler<EventArgs>>()
             {
@@ -70,8 +76,7 @@ namespace RealizationOfApp.Fabrics
                 },
                 {
                     EventType.KeyReleased,
-                    (x,y)=>
-                    { }
+                    DelegateCaster.CastToEvHan(keyReleased)
                 },
                 {
                     EventType.MouseWheelScrolled,

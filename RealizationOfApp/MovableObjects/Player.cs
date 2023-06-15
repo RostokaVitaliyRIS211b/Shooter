@@ -4,11 +4,15 @@
     {
         public IMovableObject movable;
         public Aim aim;
+        public float angle;
+        public float yAngle;
         protected bool isAbove = true;
         public Player(AbstractPlayerFactory factory) : base(factory)
         {
             movable = factory.GetMovableObject();
             aim = factory.GetAim();
+            angle = ((float)Geometry.Angle(aim.Position, movable.Position));
+            yAngle = isAbove ? -(1-angle*angle) : (1-angle*angle);
         }
         public Clock Clocks { get => movable.Clocks; }
         public override bool IsNeedToRemove { get => movable.IsNeedToRemove; set => movable.IsNeedToRemove = value; }
@@ -36,29 +40,22 @@
         }
         public override void Draw(RenderTarget target, RenderStates states)
         {
-            float radius = Size.X>Size.Y ? Size.X : Size.Y;
-            float otnosX = aim.Position.X - movable.Position.X, otnosY;
-            aim.DeltaX = DeltaX;
-            aim.DeltaY = DeltaY;
-            if (Keyboard.IsKeyPressed(Keyboard.Key.Q))
-            {
-                otnosX = isAbove ? otnosX-2 :otnosX+2;
-               
-            }
-            else if (Keyboard.IsKeyPressed(Keyboard.Key.E))
-            {
-                otnosX = isAbove ? otnosX+2 : otnosX-2;
-            }
-            if (Math.Abs(otnosX)>radius)
-            {
-                isAbove = !isAbove;
-                otnosX = otnosX>0 ? radius : -radius;
-            }
-            otnosY = ((float)Math.Sqrt(radius*radius - otnosX*otnosX));
-            otnosY = !isAbove ? otnosY : -otnosY;
-            aim.Position = new(otnosX+movable.Position.X, otnosY+movable.Position.Y);
-            target.Draw(aim,states);
             target.Draw(movable, states);
+            float speed = 0.05f;
+            float radius = 70;
+            if(Keyboard.IsKeyPressed(Keyboard.Key.V) || Keyboard.IsKeyPressed(Keyboard.Key.B))
+            {
+                bool isRight = Keyboard.IsKeyPressed(Keyboard.Key.B);
+                angle = isRight == isAbove ? angle+speed : angle-speed;
+                if(Math.Abs(angle)>1)
+                {
+                    isAbove = !isAbove;
+                    angle = angle>0 ? 0.99f : -0.99f;
+                }
+                yAngle = isAbove ? -(1-angle*angle) : (1-angle*angle);
+            }
+            aim.Position = new(movable.Position.X+radius*angle,movable.Position.Y+radius*yAngle);
+            target.Draw(aim,states);
         }
     }
 }

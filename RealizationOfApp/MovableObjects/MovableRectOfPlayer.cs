@@ -116,7 +116,7 @@
                     {
                         if (platform.Position.Y - platform.Size.Y / 2 <= rectangle.Position.Y + rectangle.Size.Y / 2 && IsIOnTop(platform))
                         {
-                            bottom = platform.Position.Y - platform.Size.Y / 2;
+                            bottom = platform.Position.Y - platform.Size.Y / 2-2;
                         }
                         //else if(platform.Position.Y+platform.Size.Y/2>=rectangle.Position.Y-rectangle.Size.Y/2-1)
                         //{
@@ -147,11 +147,11 @@
         {
             if (Keyboard.IsKeyPressed(forLeft))
             {
-                DeltaX = -4;
+                DeltaX = -6;
             }
             if (Keyboard.IsKeyPressed(forRight))
             {
-                DeltaX = 4;
+                DeltaX = 6;
             }
             Move(DeltaX, DeltaY);
             if (bottom - (rectangle.Position.Y + rectangle.Size.Y / 2) < 0 && deltaY > 0)
