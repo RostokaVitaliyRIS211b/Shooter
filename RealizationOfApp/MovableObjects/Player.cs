@@ -38,13 +38,16 @@
         {
             float radius = Size.X>Size.Y ? Size.X : Size.Y;
             float otnosX = aim.Position.X - movable.Position.X, otnosY;
+            aim.DeltaX = DeltaX;
+            aim.DeltaY = DeltaY;
             if (Keyboard.IsKeyPressed(Keyboard.Key.Q))
             {
-                otnosX = isAbove ? --otnosX : ++otnosX;
+                otnosX = isAbove ? otnosX-2 :otnosX+2;
+               
             }
             else if (Keyboard.IsKeyPressed(Keyboard.Key.E))
             {
-                otnosX = isAbove ? ++otnosX : --otnosX;
+                otnosX = isAbove ? otnosX+2 : otnosX-2;
             }
             if (Math.Abs(otnosX)>radius)
             {

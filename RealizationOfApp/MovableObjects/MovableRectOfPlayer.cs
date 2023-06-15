@@ -122,13 +122,13 @@
                         //{
                         //    up = platform.Position.Y+platform.Size.Y/2;
                         //}
-                        else if (platform.Position.X + platform.Size.X / 2 <= rectangle.Position.X - rectangle.Size.Y / 2 + 1)
+                        else if (platform.Position.X + platform.Size.X / 2 <= rectangle.Position.X - rectangle.Size.X / 2 + 1)
                         {
                             left = platform.Position.X + platform.Size.X / 2;
                         }
-                        else if (platform.Position.X - platform.Size.X / 2 >= rectangle.Position.X + rectangle.Size.Y / 2 - 1)
+                        else if (platform.Position.X - platform.Size.X / 2 >= rectangle.Position.X + rectangle.Size.X / 2 - 1)
                         {
-                            right = platform.Position.X + platform.Size.X / 2;
+                            right = platform.Position.X - platform.Size.X / 2;
                         }
                     }
                 }
