@@ -12,6 +12,7 @@ namespace RealizationOfApp.Fabrics
             {
                 new Platform(new(1000,600)),
                 new Player(new PlayerFactoryA(new WeaponProjectile())),
+                new Player(new PlayerFactoryB(new WeaponProjectile())),
             };
         }
     }

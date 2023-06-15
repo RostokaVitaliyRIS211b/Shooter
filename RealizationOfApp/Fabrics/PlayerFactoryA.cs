@@ -28,10 +28,11 @@ namespace RealizationOfApp.Fabrics
             circleShape.OutlineColor = Color.Black;
             circleShape.OutlineThickness = 3;
             radius = movableRect.Size.X>movableRect.Size.Y ? movableRect.Size.X : movableRect.Size.Y;
-            circleShape.Position = new Vector2f(movableRect.Position.X - radius , movableRect.Position.Y ); 
+            circleShape.Position = new Vector2f(movableRect.Position.X + radius , movableRect.Position.Y ); 
             aim = new(circleShape);
         }
         public override Aim GetAim() => aim;
+        public override IList<Keyboard.Key> GetControls() => new List<Keyboard.Key>() { Keyboard.Key.V, Keyboard.Key.B };
         public override IMovableObject GetMovableObject() => movableRect;
         public override Dictionary<EventType, WinEventHandler<EventArgs>> GetActions()
         {

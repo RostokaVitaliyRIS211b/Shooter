@@ -4,5 +4,6 @@
     {
         public abstract IMovableObject GetMovableObject();
         public abstract Aim GetAim();
+        public abstract IList<Keyboard.Key> GetControls();
     }
 }

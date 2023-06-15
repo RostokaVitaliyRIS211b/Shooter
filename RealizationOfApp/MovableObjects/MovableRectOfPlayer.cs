@@ -8,6 +8,7 @@
         protected float deltaX, deltaY, massOfObject, bottom, trenie, left, right, up;
         protected bool isGravityOn;
         protected RectangleShape rectangle;
+        public float speed = 6;
         public Keyboard.Key forLeft, forRight;
         public MovableRectOfPlayer(in RectangleShape rectangle, float bottom, float trenie, float left, float right, float up, Keyboard.Key forLeft, Keyboard.Key forRight)
         {
@@ -147,11 +148,11 @@
         {
             if (Keyboard.IsKeyPressed(forLeft))
             {
-                DeltaX = -6;
+                DeltaX = -speed;
             }
             if (Keyboard.IsKeyPressed(forRight))
             {
-                DeltaX = 6;
+                DeltaX = speed;
             }
             Move(DeltaX, DeltaY);
             if (bottom - (rectangle.Position.Y + rectangle.Size.Y / 2) < 0 && deltaY > 0)

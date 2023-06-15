@@ -6,10 +6,12 @@
         public Aim aim;
         public float angle;
         public float yAngle;
+        public IList<Keyboard.Key> controls;
         protected bool isAbove = true;
         public Player(AbstractPlayerFactory factory) : base(factory)
         {
             movable = factory.GetMovableObject();
+            controls = factory.GetControls();
             aim = factory.GetAim();
             angle = ((float)Geometry.Angle(aim.Position, movable.Position));
             yAngle = isAbove ? -(1-angle*angle) : (1-angle*angle);
@@ -43,9 +45,9 @@
             target.Draw(movable, states);
             float speed = 0.05f;
             float radius = 70;
-            if(Keyboard.IsKeyPressed(Keyboard.Key.V) || Keyboard.IsKeyPressed(Keyboard.Key.B))
+            if (Keyboard.IsKeyPressed(controls[0]) || Keyboard.IsKeyPressed(controls[1]))
             {
-                bool isRight = Keyboard.IsKeyPressed(Keyboard.Key.B);
+                bool isRight = Keyboard.IsKeyPressed(controls[1]);
                 angle = isRight == isAbove ? angle+speed : angle-speed;
                 if(Math.Abs(angle)>1)
                 {
