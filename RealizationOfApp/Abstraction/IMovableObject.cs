@@ -1,7 +1,6 @@
-﻿
-namespace RealizationOfApp
+﻿namespace RealizationOfApp.Abstraction
 {
-    public interface IMovableObject:IGameObject
+    public interface IMovableObject : IGameObject
     {
         public float DeltaX { get; set; }
         public float DeltaY { get; set; }

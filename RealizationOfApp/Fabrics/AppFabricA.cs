@@ -1,7 +1,6 @@
-﻿
-namespace RealizationOfApp
+﻿namespace RealizationOfApp.Fabrics
 {
-    public class AppFabricA:AbstractEventHandlerFac
+    public class AppFabricA : AbstractEventHandlerFac
     {
         public override ICollection<AbstractEventDrawable> CreateInteractiveObjects()
         {

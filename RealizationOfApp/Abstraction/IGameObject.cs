@@ -1,8 +1,6 @@
-﻿
-
-namespace RealizationOfApp
+﻿namespace RealizationOfApp.Abstraction
 {
-    public interface IGameObject:Drawable
+    public interface IGameObject : Drawable
     {
         public bool IsNeedToRemove { get; set; }
         public Vector2f Position { get; set; }

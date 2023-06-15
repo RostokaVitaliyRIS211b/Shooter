@@ -1,6 +1,4 @@
-﻿
-
-namespace RealizationOfApp
+﻿namespace RealizationOfApp
 {
     public class GGO:AbstractEventDrawable
     {
